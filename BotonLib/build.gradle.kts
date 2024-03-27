@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("maven-publish")
 }
 
 android {
@@ -29,6 +30,22 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.github.Fluzo.PruebaLibAndroid"
+                artifactId = "test"
+                version = "1.0.1"
+            }
+            repositories {
+                mavenLocal()
+            }
+        }
     }
 }
 
